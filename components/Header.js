@@ -2,8 +2,6 @@ import React from "react";
 import Link from "next/link";
 
 const Header = () => {
-
-    
     return (
         <header>
         <div className="container header">
@@ -18,9 +16,11 @@ const Header = () => {
                 <li>
                 <Link href={"/"}>Home</Link>
                 </li>
+                
                 <li>
                 <Link href={"/about"}>About</Link>
                 </li>
+                
                 <li className="--btn --btn-primary">
                 <Link href={"/"}>Get Started</Link>
                 </li>
