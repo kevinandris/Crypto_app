@@ -31,16 +31,16 @@ const CryptoList = ({ coins }) => {
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems = filteredCoins.slice(itemOffset, endOffset);
-    setPageCount = Math.ceil(filteredCoins.length / itemsPerPage);
-
-    const handlePageClick = (event) => {
-      const newOffset = (event.selected * itemsPerPage) % filteredCoins.length;
-
-      setItemOffset(newOffset);
-    };
+    setCurrentItems(filteredCoins.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(filteredCoins.length / itemsPerPage));
   }, [itemOffset, itemsPerPage, filteredCoins]);
-  // ! ==============================================
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % filteredCoins.length;
+    setItemOffset(newOffset);
+  };
+
+  // ! END PAGINATION ==================================
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -105,7 +105,8 @@ const CryptoList = ({ coins }) => {
             </tbody>
           </table>
         </div>
-        // ! Pagination
+
+        {/* // ! Pagination */}
         <ReactPaginate
           breakLabel="..."
           nextLabel="Next"
@@ -115,8 +116,8 @@ const CryptoList = ({ coins }) => {
           previousLabel="Prev"
           renderOnZeroPageCount={null}
           containerClassName="pagination"
-          pageLinkClassName="page-number"
-          prevLinkClassName="page-num"
+          pageLinkClassName="page-num"
+          previousLinkClassName="page-num"
           nextLinkClassName="page-num"
           activeLinkClassName="active"
         />
