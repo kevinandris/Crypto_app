@@ -23,7 +23,20 @@ const CryptoList = ({ coins }) => {
   const [search, setSearch] = useState("");
   const [filteredCoins, setFilteredCoins] = useState([]);
 
-  // ! Pagination
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  // ! Search Coins
+  useEffect(() => {
+    setFilteredCoins(
+      coins.filter((coin) =>
+        coin.name.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search, coins]);
+
+  // ! Pagination (npm i react-paginate)
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
@@ -39,21 +52,7 @@ const CryptoList = ({ coins }) => {
     const newOffset = (event.selected * itemsPerPage) % filteredCoins.length;
     setItemOffset(newOffset);
   };
-
   // ! END PAGINATION ==================================
-
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
-  };
-
-  // ! Search Coins
-  useEffect(() => {
-    setFilteredCoins(
-      coins.filter((coin) =>
-        coin.name.toLowerCase().includes(search.toLowerCase())
-      )
-    );
-  }, [search, coins]);
 
   return (
     <section className="coin-list">
@@ -86,11 +85,13 @@ const CryptoList = ({ coins }) => {
                   <tr>
                     <td>{index + 1}</td>
 
-                    <td>
-                      <Image src={icon} alt={name} width="20" height="20" />
-                      &nbsp;
-                      {symbol}
-                    </td>
+                    <Link href={"/" + id} key={id}>
+                      <td>
+                        <Image src={icon} alt={name} width="20" height="20" />
+                        &nbsp;
+                        {symbol}
+                      </td>
+                    </Link>
 
                     <td>${formatNumbers(price.toFixed(2))}</td>
 
@@ -125,11 +126,5 @@ const CryptoList = ({ coins }) => {
     </section>
   );
 };
-
-{
-  /* <Link href={"/" + id} key={id}>
-
-</Link> */
-}
 
 export default CryptoList;
