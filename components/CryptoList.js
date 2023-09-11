@@ -3,6 +3,7 @@ import styles from "../styles/CryptoList.module.scss";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Search from "./Search";
+import ReactPaginate from "react-paginate";
 
 export const formatNumbers = (numbers) => {
   return numbers.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -21,6 +22,25 @@ export const checkPrice = (p) => {
 const CryptoList = ({ coins }) => {
   const [search, setSearch] = useState("");
   const [filteredCoins, setFilteredCoins] = useState([]);
+
+  // ! Pagination
+  const [currentItems, setCurrentItems] = useState([]);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
+  const itemsPerPage = 10;
+
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    setCurrentItems = filteredCoins.slice(itemOffset, endOffset);
+    setPageCount = Math.ceil(filteredCoins.length / itemsPerPage);
+
+    const handlePageClick = (event) => {
+      const newOffset = (event.selected * itemsPerPage) % filteredCoins.length;
+
+      setItemOffset(newOffset);
+    };
+  }, [itemOffset, itemsPerPage, filteredCoins]);
+  // ! ==============================================
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -52,7 +72,7 @@ const CryptoList = ({ coins }) => {
             </thead>
 
             <tbody>
-              {filteredCoins.map((coin, index) => {
+              {currentItems.map((coin, index) => {
                 const {
                   id,
                   name,
@@ -85,6 +105,21 @@ const CryptoList = ({ coins }) => {
             </tbody>
           </table>
         </div>
+        // ! Pagination
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="Next"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel="Prev"
+          renderOnZeroPageCount={null}
+          containerClassName="pagination"
+          pageLinkClassName="page-number"
+          prevLinkClassName="page-num"
+          nextLinkClassName="page-num"
+          activeLinkClassName="active"
+        />
       </div>
     </section>
   );

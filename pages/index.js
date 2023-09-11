@@ -31,7 +31,7 @@ export default function Home({ coins }) {
 
 export const getStaticProps = async () => {
   const response = await fetch(
-    "https://api.coinstats.app/public/v1/coins?skip=0&limit=10"
+    "https://api.coinstats.app/public/v1/coins?skip=0&limit=50"
   );
   const data = await response.json();
 
