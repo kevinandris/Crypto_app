@@ -11,10 +11,9 @@ export const checkPrice = (p) => {
   const priceChange = Math.sign(p);
 
   if (priceChange === -1) {
-    // ! display red color when the number is negative
-    return "red";
+    return "red"; // ! display red color when the number is NEGATIVE
   } else {
-    return "green"; // ! display green color when the number is positive
+    return "green"; // * display green color when the number is POSITIVE
   }
 };
 const CryptoList = ({ coins }) => {
@@ -45,21 +44,23 @@ const CryptoList = ({ coins }) => {
                   marketCap,
                 } = coin;
                 return (
-                  <Link key={id} href={"/" + id}>
-                    <tr>
-                      <td>{index + 1}</td>
-                      <td>
-                        <Image src={icon} alt={name} width="20" height="20" />
-                        &nbsp;
-                        {symbol}
-                      </td>
-                      <td>${formatNumbers(price.toFixed(2))}</td>
-                      <td className={checkPrice(priceChange1d)}>
-                        {priceChange1d}
-                      </td>
-                      <td>${formatNumbers(marketCap.toFixed(2))}</td>
-                    </tr>
-                  </Link>
+                  <tr>
+                    <td>{index + 1}</td>
+
+                    <td>
+                      <Image src={icon} alt={name} width="20" height="20" />
+                      &nbsp;
+                      {symbol}
+                    </td>
+
+                    <td>${formatNumbers(price.toFixed(2))}</td>
+
+                    <td className={checkPrice(priceChange1d)}>
+                      {priceChange1d}
+                    </td>
+
+                    <td>${formatNumbers(marketCap.toFixed(2))}</td>
+                  </tr>
                 );
               })}
             </tbody>
@@ -69,5 +70,11 @@ const CryptoList = ({ coins }) => {
     </section>
   );
 };
+
+{
+  /* <Link href={"/" + id} key={id}>
+
+</Link> */
+}
 
 export default CryptoList;
