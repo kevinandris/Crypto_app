@@ -1,6 +1,6 @@
 #   Project Description:
     1) This is a Crypto application using NextJs framework that tracks the current price
-      for each type of crypto coin that is fetched through an API.
+       for each type of crypto coin that is fetched through an API.
     2) Hooks involved in this project are useState and useEffect.
     3) Pagination available at the bottom to explore different bitcoins.
 
